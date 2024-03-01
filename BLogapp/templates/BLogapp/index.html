@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block page_title %}
+<h2>My Blog Posts</h2>
+{% endblock page_title %}
+
+{% block page_content %}
+{% block post %}
+{% for p in post %}
+<h3><a href="{% url 'blog_detail' p.pk %}">{{p.title}}</a></h3>
+<small>
+    {{p.created_on.date}} | Catagories:
+    {% for c in p.catagory_name.all   %}
+    <a href="{% url 'blog_catagory' % c.catagory_name }">
+        {{c.catagory_name}}
+    </a>
+{% endfor %}
+</small>
+<p>{{p.body | slice:':400'}}...</p>
+{% endfor %}
+{% endblock post %}
+{% endblock page_content %}

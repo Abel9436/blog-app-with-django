@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block page_title %}
+<h2>{{post.title}}</h2>
+{% endblock page_title %}
+{% block page_content %}
+<small>
+    {{post.created_on.date}}
+    {% for c in post.catagories.all %}
+    <a href="{% url 'blog_catagory' c.catagory_name %}">
+        {{c.catagory_name}}
+
+    </a>
+    {% endfor %}
+</small>
+<p>{{post.body | linebreaks}}</p>
+<h3>leave your comment : </h3>
+<form method="post">
+{% csrf_token %}
+<div>
+    {{form.author}}
+</div>
+<div>
+    {{form.body}}
+</div>
+<button type="submit" class = "btn btn-primary">Submit</button>
+
+
+</form>
+<h3>Comments : </h3>
+{% for co in comment %}
+<p>
+    on {{co.created_on.date}} <b> {{co.author}}</b> wrote.
+</p>
+<p>
+    on{{co.body |linebreaks}} 
+</p>
+{% endfor %}
+{% endblock page_content %}
